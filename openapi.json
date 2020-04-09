@@ -1,0 +1,77 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "API Service",
+    "version": "1.0.0",
+    "description": "API Service endpoints",
+    "contact": {
+      "email": "brandonin@me.com",
+      "name": "Brandon In"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000/"
+    }
+  ],
+  "tags": [
+    {
+      "name": "webhook",
+      "description": "webhook APIs"
+    }
+  ],
+  "paths": {
+    "/webhook/typeform": {
+      "post": {
+        "tags": [
+          "webhook"
+        ],
+        "summary": "A simple webhook in for typeform submission",
+        "operationId": "typeform-webhook",
+        "requestBody": {
+          "description": "Typeform email webhook",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ScrapedDataSchema"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "webhook was successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScrapedDataSchema"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ScrapedDataSchema": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "string",
+            "example": "Some header from Wikipedia"
+          },
+          "createdAt": {
+            "type": "number",
+            "example": 1586390211625
+          }
+        }
+      }
+    }
+  }
+}
